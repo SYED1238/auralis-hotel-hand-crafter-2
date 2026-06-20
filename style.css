@@ -2532,6 +2532,8 @@ body.portal-active .theme-selector {
     opacity: 0.9;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)) brightness(0.75);
     transition: transform 0.25s ease-out;
+    mask-image: radial-gradient(circle at 50% 50%, transparent 25%, black 75%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 25%, black 75%);
 }
 
 .layer-front {
@@ -2539,6 +2541,8 @@ body.portal-active .theme-selector {
     opacity: 1;
     filter: drop-shadow(0 30px 60px rgba(0,0,0,0.85)) brightness(0.9);
     transition: transform 0.3s ease-out;
+    mask-image: radial-gradient(circle at 50% 50%, transparent 45%, black 85%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 45%, black 85%);
 }
 
 .layer-atmospheric {
@@ -2604,7 +2608,7 @@ body.portal-active .theme-selector {
     transform: translateY(-47%) scale(0.96);
     z-index: 10;
     width: 500px;
-    padding: 44px;
+    padding: 32px;
     border-radius: 28px;
     background: rgba(10, 24, 18, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2612,9 +2616,21 @@ body.portal-active .theme-selector {
     -webkit-backdrop-filter: blur(40px);
     box-shadow: 0 40px 100px rgba(0,0,0,0.6);
     opacity: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
     transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s, 
                 transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
     will-change: transform, opacity;
+}
+
+.portal-hud::-webkit-scrollbar {
+    width: 4px;
+}
+
+.portal-hud::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
 }
 
 .portal-overlay.active .portal-hud {
@@ -2676,7 +2692,7 @@ body.portal-active .theme-selector {
     font-style: italic;
     color: var(--text-secondary);
     display: block;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .hud-divider {
@@ -2708,22 +2724,22 @@ body.portal-active .theme-selector {
 
 .hud-narrative {
     font-family: var(--font-body);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 300;
-    line-height: 1.85;
+    line-height: 1.8;
     color: var(--text-secondary);
-    margin-bottom: 28px;
-    min-height: 110px;
+    margin-bottom: 20px;
+    min-height: 100px;
 }
 
 .hud-specs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px 16px;
-    padding: 22px 0;
+    gap: 16px 16px;
+    padding: 16px 0;
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .hud-spec-item {
@@ -2816,7 +2832,7 @@ body.portal-active .theme-selector {
 
 /* Close button styled like starlight compass */
 .portal-close-btn {
-    position: absolute;
+    position: fixed;
     right: 48px;
     top: 48px;
     background: transparent;
@@ -2826,7 +2842,7 @@ body.portal-active .theme-selector {
     align-items: center;
     gap: 16px;
     color: var(--text-muted);
-    z-index: 12;
+    z-index: 2100;
     transition: color 0.4s var(--ease-luxury);
 }
 
