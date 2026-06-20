@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest" data-time="day">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURALIS GRAND FOREST RESERVE — Where Luxury Meets The Wild</title>
+    <meta name="description"
+        content="Discover Auralis Grand Forest Reserve, an award-winning cinematic luxury hotel hidden among ancient canopy forests. Immerse yourself in nature, wellness, and signature residences.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+    <!-- Background Atmospheric System -->
+    <div class="bg-system" id="bgSystem">
+        <div class="bg-layer bg-gradient"></div>
+        <div class="bg-layer bg-leaves" id="bgLeaves">
+            <svg class="leaf leaf-1" viewBox="0 0 300 400" fill="none">
+                <path d="M150 0C150 0 300 100 300 250C300 350 230 400 150 400C70 400 0 350 0 250C0 100 150 0 150 0Z"
+                    fill="currentColor" />
+            </svg>
+            <svg class="leaf leaf-2" viewBox="0 0 200 300" fill="none">
+                <path d="M100 0C100 0 200 80 200 180C200 250 155 300 100 300C45 300 0 250 0 180C0 80 100 0 100 0Z"
+                    fill="currentColor" />
+            </svg>
+            <svg class="leaf leaf-3" viewBox="0 0 250 350" fill="none">
+                <path d="M125 0C125 0 250 90 250 210C250 300 195 350 125 350C55 350 0 300 0 210C0 90 125 0 125 0Z"
+                    fill="currentColor" />
+            </svg>
+            <svg class="leaf leaf-4" viewBox="0 0 180 260" fill="none">
+                <path d="M90 0C90 0 180 65 180 150C180 210 140 260 90 260C40 260 0 210 0 150C0 65 90 0 90 0Z"
+                    fill="currentColor" />
+            </svg>
+        </div>
+        <div class="bg-layer bg-shadows"></div>
+        <div class="bg-layer bg-glow" id="bgGlow"></div>
+        <canvas class="bg-layer bg-particles" id="particleCanvas"></canvas>
+        <div class="bg-layer bg-sunrays" id="sunrays">
+            <div class="sunray sunray-1"></div>
+            <div class="sunray sunray-2"></div>
+            <div class="sunray sunray-3"></div>
+            <div class="sunray sunray-4"></div>
+        </div>
+        <!-- Forest Mist Layers -->
+        <div class="bg-layer bg-mist-system">
+            <div class="mist-layer mist-back" id="mistBack"></div>
+            <div class="mist-layer mist-front" id="mistFront"></div>
+        </div>
+    </div>
+
+    <!-- Theme & Time Selector Panel -->
+    <div class="theme-selector" id="themeSelector">
+        <button class="theme-toggle" id="themeToggle" aria-label="Open atmosphere settings">
+            <svg class="theme-toggle-icon" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.2" />
+                <path
+                    d="M12 2V4M12 20V22M2 12H4M20 12H22M4.93 4.93L6.34 6.34M17.66 17.66L19.07 19.07M4.93 19.07L6.34 17.66M17.66 6.34L19.07 4.93"
+                    stroke="currentColor" stroke-width="1.2" />
+            </svg>
+        </button>
+        <div class="theme-panel" id="themePanel">
+            <span class="theme-panel-label">Atmosphere</span>
+            <div class="theme-options">
+                <button class="theme-option active" data-theme="forest" id="themeForest">
+                    <span class="theme-swatch theme-swatch-forest"></span>
+                    <span class="theme-name">Forest Reserve</span>
+                </button>
+                <button class="theme-option" data-theme="midnight" id="themeMidnight">
+                    <span class="theme-swatch theme-swatch-midnight"></span>
+                    <span class="theme-name">Midnight Retreat</span>
+                </button>
+                <button class="theme-option" data-theme="amber" id="themeAmber">
+                    <span class="theme-swatch theme-swatch-amber"></span>
+                    <span class="theme-name">Amber Sanctuary</span>
+                </button>
+            </div>
+            
+            <span class="theme-panel-label" style="margin-top: 14px;">Time of Day</span>
+            <div class="time-options">
+                <button class="time-option active" data-time-btn="day" id="timeDayBtn">
+                    <span class="time-icon">☀</span>
+                    <span class="time-name">Day Sanctuary</span>
+                </button>
+                <button class="time-option" data-time-btn="sunset" id="timeSunsetBtn">
+                    <span class="time-icon">🌅</span>
+                    <span class="time-name">Sunset Glow</span>
+                </button>
+                <button class="time-option" data-time-btn="night" id="timeNightBtn">
+                    <span class="time-icon">🌙</span>
+                    <span class="time-name">Night Retreat</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" id="navLogo">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path
+                            d="M20 2L24 8L31 6L28 13L35 17L28 20L31 27L24 25L20 32L16 25L9 27L12 20L5 17L12 13L9 6L16 8L20 2Z"
+                            stroke="currentColor" stroke-width="1.5" fill="none" />
+                        <circle cx="20" cy="17" r="5" stroke="currentColor" stroke-width="1.2" fill="none" />
+                    </svg>
+                </span>
+                <span class="logo-text">AURALIS</span>
+            </a>
+            <div class="nav-links">
+                <a href="#residences" class="nav-link" id="navResidences">Residences</a>
+                <a href="#experiences" class="nav-link" id="navExperiences">Experiences</a>
+                <a href="#story" class="nav-link" id="navStory">Our Story</a>
+                <a href="#dining" class="nav-link" id="navDining">Dining</a>
+                <a href="#wellness" class="nav-link" id="navWellness">Wellness</a>
+                <a href="#reservation" class="nav-link" id="navReserve">Reserve</a>
+            </div>
+            <a href="#reservation" class="nav-cta" id="navCtaBtn">Reserve Your Escape</a>
+            
+            <button class="nav-menu-toggle" id="menuToggle" aria-label="Toggle navigation Menu">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <div class="mobile-menu-links">
+                <a href="#residences" class="mobile-menu-link">Residences</a>
+                <a href="#experiences" class="mobile-menu-link">Experiences</a>
+                <a href="#story" class="mobile-menu-link">Our Story</a>
+                <a href="#dining" class="mobile-menu-link">Dining</a>
+                <a href="#wellness" class="mobile-menu-link">Wellness</a>
+                <a href="#reservation" class="mobile-menu-link">Reserve</a>
+            </div>
+            <a href="#reservation" class="mobile-menu-cta">Reserve Your Escape</a>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <main id="main-content" style="position: relative; z-index: 1;">
+        
+        <!-- SECTION 01: CINEMATIC HERO -->
+        <section class="hero" id="heroSection">
+            <div class="hero-inner">
+                <!-- LEFT COLUMN -->
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-line"></span>
+                        <span class="badge-text">EST. MMXXV • PRIVATE FOREST RESERVE</span>
+                        <span class="badge-line"></span>
+                    </div>
+                    <h1 class="hero-title" id="heroTitle">
+                        <span class="title-line title-line-1">AURALIS</span>
+                        <span class="title-line title-line-2">HOTEL</span>
+                    </h1>
+                    <p class="hero-subtitle">Where Luxury Meets The Wild</p>
+                    <p class="hero-desc">Hidden among ancient forest canopies, Auralis Grand Forest Reserve offers a sanctuary of architecture, nature, wellness, and unforgettable experiences.</p>
+                    <div class="hero-actions">
+                        <a href="#reservation" class="btn btn-primary" id="heroReserveBtn">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Reserve Your Escape</span>
+                            <span class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </span>
+                        </a>
+                        <a href="#residences" class="btn btn-secondary" id="heroExploreBtn">
+                            <span class="btn-text">Explore The Estate</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- RIGHT COLUMN -->
+                <div class="hero-visual">
+                    <div class="hero-image-wrapper" id="heroImageWrapper">
+                        <div class="hero-image-glow"></div>
+                        <img src="images/hero_forest_villa.png" alt="Luxury glass forest villa with warm lighting"
+                            class="hero-image" id="heroImage">
+                        <!-- Hero Fog Layer inside image container for depth -->
+                        <div class="hero-fog-overlay" id="heroFogOverlay"></div>
+                    </div>
+                    
+                    <!-- Floating Glass Card -->
+                    <div class="hero-card" id="heroCard">
+                        <div class="hero-card-shine" id="heroCardShine"></div>
+                        <div class="hero-card-inner">
+                            <div class="hero-card-header">
+                                <svg class="hero-card-emblem" viewBox="0 0 60 60" fill="none">
+                                    <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="0.8" />
+                                    <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="0.5" />
+                                    <path
+                                        d="M30 8L34 16L42 14L38 22L46 26L38 30L42 38L34 36L30 44L26 36L18 38L22 30L14 26L22 22L18 14L26 16L30 8Z"
+                                        stroke="currentColor" stroke-width="0.7" fill="none" />
+                                </svg>
+                                <span class="hero-card-label">THE RESERVE COLLECTION</span>
+                            </div>
+                            <div class="hero-card-items">
+                                <div class="hero-card-item">
+                                    <div class="item-icon">
+                                        <svg viewBox="0 0 32 32" fill="none">
+                                            <path d="M6 26C6 26 8 24 8 20C8 16 12 12 16 8C20 12 24 16 24 20C24 24 22 26 22 26" stroke="currentColor" stroke-width="1.2" />
+                                            <path d="M16 8V28" stroke="currentColor" stroke-width="0.8" />
+                                        </svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name">Private Villas</span>
+                                        <span class="item-detail">Glass pavilions, secluded luxury</span>
+                                    </div>
+                                </div>
+                                <div class="hero-card-item">
+                                    <div class="item-icon">
+                                        <svg viewBox="0 0 32 32" fill="none">
+                                            <circle cx="16" cy="16" r="8" stroke="currentColor" stroke-width="1" />
+                                            <path d="M4 16H8M24 16H28" stroke="currentColor" stroke-width="0.8" />
+                                        </svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name">Infinity Pools</span>
+                                        <span class="item-detail">Suspended above forest canopy</span>
+                                    </div>
+                                </div>
+                                <div class="hero-card-item">
+                                    <div class="item-icon">
+                                        <svg viewBox="0 0 32 32" fill="none">
+                                            <path d="M6 28L16 4L26 28" stroke="currentColor" stroke-width="1" />
+                                            <circle cx="16" cy="14" r="3" stroke="currentColor" stroke-width="0.8" />
+                                        </svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name">Forest Spa</span>
+                                        <span class="item-detail">Botanical & hydrotherapy rituals</span>
+                                    </div>
+                                </div>
+                                <div class="hero-card-item">
+                                    <div class="item-icon">
+                                        <svg viewBox="0 0 32 32" fill="none">
+                                            <path d="M8 6C8 6 16 10 16 18C16 10 24 6 24 6" stroke="currentColor" stroke-width="1" />
+                                            <path d="M16 18V28" stroke="currentColor" stroke-width="0.8" />
+                                        </svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name">Fine Dining</span>
+                                        <span class="item-detail">Chef-curated woodland recipes</span>
+                                    </div>
+                                </div>
+                                <div class="hero-card-item">
+                                    <div class="item-icon">
+                                        <svg viewBox="0 0 32 32" fill="none">
+                                            <circle cx="16" cy="12" r="4" stroke="currentColor" stroke-width="1" />
+                                            <path d="M6 28C6 22 10 20 16 20C22 20 26 22 26 28" stroke="currentColor" stroke-width="1" />
+                                        </svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name">24-Hour Concierge</span>
+                                        <span class="item-detail">Personalized sanctuary hosting</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hero-card-footer">
+                                <span class="hc-footer-tag">AURALIS · MMXXV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-scroll-hint" id="scrollHint">
+                <span class="scroll-text">Scroll to Explore</span>
+                <div class="scroll-line">
+                    <div class="scroll-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 02: SIGNATURE COLLECTION -->
+        <section class="collection" id="residences">
+            <div class="section-header">
+                <span class="section-tag">Signature Residences</span>
+                <h2 class="section-title">Signature Residences</h2>
+                <p class="section-desc">Nine extraordinary retreats crafted for unforgettable journeys. Glassmorphic architecture blending seamlessly with the wilderness.</p>
+            </div>
+            <div class="collection-grid" id="collectionGrid">
+                <!-- Residence 1 -->
+                <div class="col-card" data-card="1">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="images/suite_forest.png" alt="Forest Canopy Villa" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Forest Canopy Villa</h3>
+                            <p class="col-card-desc">Elevated high among ancient pine trees, offering absolute privacy and breathtaking canopy views.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2-3</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 120 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Bronze Hearth</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 2 -->
+                <div class="col-card" data-card="2">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="images/suite_emerald.png" alt="Emerald Pool Residence" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Emerald Pool Residence</h3>
+                            <p class="col-card-desc">Featuring an indoor-outdoor emerald heated spring pool integrated with volcanic stone gardens.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2-4</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 150 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Spring Pool</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 3 -->
+                <div class="col-card" data-card="3">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="images/suite_skyline.png" alt="Moonlight Pavilion" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Moonlight Pavilion</h3>
+                            <p class="col-card-desc">An open-roof architectural marvel designed for stargazing and enjoying cold mountain breezes.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 110 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Glass Dome</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 4 -->
+                <div class="col-card" data-card="4">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80&auto=format" alt="The Sanctuary Suite" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">The Sanctuary Suite</h3>
+                            <p class="col-card-desc">A spacious suite designed with sustainable wood and stone, focused on deep relaxation and silence.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 130 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Stone Tub</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 5 -->
+                <div class="col-card" data-card="5">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&auto=format" alt="Riverstone Retreat" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Riverstone Retreat</h3>
+                            <p class="col-card-desc">Built directly on the edge of the crystal river, featuring an outdoor deck and waterfall view.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2-3</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 140 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">River Deck</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 6 -->
+                <div class="col-card" data-card="6">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&auto=format" alt="Sky Deck Residence" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Sky Deck Residence</h3>
+                            <p class="col-card-desc">Includes an expansive rooftop deck hovering above the trees with private outdoor dining and fireplace.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 4</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 180 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Sky Lounge</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 7 -->
+                <div class="col-card" data-card="7">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80&auto=format" alt="Hidden Grove Villa" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Hidden Grove Villa</h3>
+                            <p class="col-card-desc">Tucked in a dense moss-covered clearing, offering absolute solitude and organic architectural finishes.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 2</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 115 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Zen Garden</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 8 -->
+                <div class="col-card" data-card="8">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80&auto=format" alt="Royal Forest Manor" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Royal Forest Manor</h3>
+                            <p class="col-card-desc">A magnificent two-story estate constructed of premium stone and massive glass windows for active light.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 6</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 320 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Dual Hearth</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Residence 9 -->
+                <div class="col-card" data-card="9">
+                    <div class="col-card-shine"></div>
+                    <div class="col-card-inner">
+                        <div class="col-card-visual">
+                            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80&auto=format" alt="Auralis Grand Estate" class="col-card-img" loading="lazy">
+                            <div class="col-card-img-overlay"></div>
+                        </div>
+                        <div class="col-card-content">
+                            <h3 class="col-card-title">Auralis Grand Estate</h3>
+                            <p class="col-card-desc">The reserve's crown jewel. A sprawling sanctuary complex with private waterfall, pools, and hosting rooms.</p>
+                            <div class="col-card-specs">
+                                <span class="spec-item">Guests: 8-10</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Size: 580 m²</span>
+                                <span class="spec-dot">•</span>
+                                <span class="spec-item">Waterfall Spa</span>
+                            </div>
+                            <div class="col-card-meta">
+                                <span class="meta-item">FOREST VIEW</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">PRIVATE POOL</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-item">BUTLER SERVICE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 03: EXPERIENCES -->
+        <section class="experiences" id="experiences">
+            <div class="section-header">
+                <span class="section-tag">Curated Journeys</span>
+                <h2 class="section-title">The Reserve Experiences</h2>
+                <p class="section-desc">Each moment is an invitation to reconnect. Immersive activities blending dynamic movement with luxury relaxation.</p>
+            </div>
+            
+            <div class="experience-list">
+                <!-- Exp 1 -->
+                <div class="experience-item">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="images/spa_sanctuary.png" alt="Forest Wellness Spa" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">01</span>
+                        <h3 class="exp-title">Forest Wellness Spa</h3>
+                        <p class="exp-text">Restore body and spirit with therapies infused with mountain moss, pine essence, and warm thermal stone massages. Set in glass domes surrounded by giant forest redwoods.</p>
+                        <a href="#wellness" class="exp-link">Explore Spa Sanctuary</a>
+                    </div>
+                </div>
+                <!-- Exp 2 -->
+                <div class="experience-item alt">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="images/dining_artistry.png" alt="Private Dining Under The Stars" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">02</span>
+                        <h3 class="exp-title">Private Dining Under The Stars</h3>
+                        <p class="exp-text">A secluded clearing illuminated by suspended lanterns and open-fire hearths. Savor a bespoke multi-course degustation crafted by your personal chef with seasonal forest elements.</p>
+                        <a href="#dining" class="exp-link">Explore Dining Options</a>
+                    </div>
+                </div>
+                <!-- Exp 3 -->
+                <div class="experience-item">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=800&q=80&auto=format" alt="Infinity Pool Sanctuary" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">03</span>
+                        <h3 class="exp-title">Infinity Pool Sanctuary</h3>
+                        <p class="exp-text">Swim to the horizon. Our heated spring pools hang over valley cliffs, creating an endless reflection of mountains, sky, and early morning fog drifts.</p>
+                        <a href="#residences" class="exp-link">View Residences</a>
+                    </div>
+                </div>
+                <!-- Exp 4 -->
+                <div class="experience-item alt">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80&auto=format" alt="Nature Discovery Trails" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">04</span>
+                        <h3 class="exp-title">Nature Discovery Trails</h3>
+                        <p class="exp-text">Led by master reserve botanists, wander through ancient hollows, discovering hidden waterfalls, moss beds, and the delicate ecosystem of our private sanctuary grounds.</p>
+                        <a href="#reservation" class="exp-link">Book Experience</a>
+                    </div>
+                </div>
+                <!-- Exp 5 -->
+                <div class="experience-item">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80&auto=format" alt="Sunrise Yoga Pavilion" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">05</span>
+                        <h3 class="exp-title">Sunrise Yoga Pavilion</h3>
+                        <p class="exp-text">Begin the day with mindful breath. An open glass platform suspended above river mist, catching the first golden rays of dawn in absolute silence.</p>
+                        <a href="#wellness" class="exp-link">Wellness Programs</a>
+                    </div>
+                </div>
+                <!-- Exp 6 -->
+                <div class="experience-item alt">
+                    <div class="exp-visual scroll-parallax">
+                        <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=800&q=80&auto=format" alt="Helicopter Arrival Experience" class="exp-img" loading="lazy">
+                        <div class="exp-overlay"></div>
+                    </div>
+                    <div class="exp-content">
+                        <span class="exp-number">06</span>
+                        <h3 class="exp-title">Helicopter Arrival Experience</h3>
+                        <p class="exp-text">Touch down in the wild. Begin your retreat with a breathtaking flight over pristine alpine lakes and mountain ranges, landing on our private forest helipad.</p>
+                        <a href="#reservation" class="exp-link">Reserve Sanctuary</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 04: CINEMATIC DIVIDER -->
+        <div class="cinematic-divider">
+            <div class="divider-line"></div>
+            <span class="divider-emblem">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <path
+                        d="M16 4L18 12L26 10L22 18L30 20L22 22L26 30L18 28L16 36L14 28L6 30L10 22L2 20L10 18L6 10L14 12L16 4Z"
+                        stroke="currentColor" stroke-width="0.8" />
+                </svg>
+            </span>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- SECTION 05: THE AURALIS STORY -->
+        <section class="story-section" id="story">
+            <div class="story-inner">
+                <!-- Left Story Column -->
+                <div class="story-visual">
+                    <div class="story-image-frame" id="storyFrame">
+                        <div class="story-image-shine"></div>
+                        <img src="images/founders_story.jpg" alt="Auralis craftsman planning in wood workshop" class="story-image" loading="lazy">
+                        <div class="story-image-overlay"></div>
+                        <div class="story-card-badge">
+                            <svg viewBox="0 0 60 60" fill="none">
+                                <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="0.5" />
+                                <path
+                                    d="M30 8L34 16L42 14L38 22L46 26L38 30L42 38L34 36L30 44L26 36L18 38L22 30L14 26L22 22L18 14L26 16L30 8Z"
+                                    stroke="currentColor" stroke-width="0.6" fill="none" />
+                            </svg>
+                            <span>Since MMXIX</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Story Column -->
+                <div class="story-content">
+                    <span class="section-tag story-tag">Our History</span>
+                    <h2 class="section-title story-title">Born From Ancient Roots</h2>
+                    <p class="story-text">Auralis Grand Forest Reserve was conceived not as a building, but as a continuation of the land itself. Discovered in MMXIX in an untouched forest valley, our founders sought to create a timeless sanctuary where human architecture harmonizes with ancient nature.</p>
+                    <p class="story-text">Every stone was hand-selected from nearby volcanic river beds. Every glass panel was angled precisely to catch the organic shift from golden daylight to deep twilight shadows. Our design philosophy holds that luxury lies in space, stillness, and organic detail.</p>
+                    <p class="story-text">Here, master hosts welcome you into a slower dimension of existence. We invite you to lose track of time, feel the breath of the woodland atmosphere, and discover the quiet luxury of the wild.</p>
+                    
+                    <div class="story-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-count="120">0</span>
+                            <span class="stat-label">Luxury Villas</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="24">0</span>
+                            <span class="stat-label">Master Hosts</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="15">0</span>
+                            <span class="stat-label">Private Experiences</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="100000" data-suffix="K+">0</span>
+                            <span class="stat-label">Guest Memories</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 06: DINING DESTinations -->
+        <section class="dining-section" id="dining">
+            <div class="section-header">
+                <span class="section-tag">Culinary Destinations</span>
+                <h2 class="section-title">Dining Destinations</h2>
+                <p class="section-desc">Savor an organic menu crafted from active woodland gardens, river trout streams, and premium local farms.</p>
+            </div>
+            
+            <div class="menu-categories">
+                <button class="menu-cat-btn active" data-category="fine" id="catFine">Fine Dining</button>
+                <button class="menu-cat-btn" data-category="lounge" id="catLounge">Forest Lounge</button>
+                <button class="menu-cat-btn" data-category="chef" id="catChef">Private Chef</button>
+                <button class="menu-cat-btn" data-category="cocktails" id="catCocktails">Signature Cocktails</button>
+            </div>
+            
+            <div class="dining-grid" id="diningGrid">
+                <!-- Dining 1: Fine Dining -->
+                <div class="dining-card" data-category="fine">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="images/dining_artistry.png" alt="Epicurean woodland dinner presentation" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">The Canopy Room</span>
+                                <span class="dining-card-price">$$$</span>
+                            </div>
+                            <h3 class="dining-card-name">Pine-Smoked Venison</h3>
+                            <p class="dining-card-info">A delicate cut smoked over burning embers of local pine bark. Served with wild forest berries and roasted chestnuts.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Chef Signature</span>
+                                <span class="dining-tag">Organic</span>
+                                <span class="dining-tag">Reserve Required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 2: Fine Dining -->
+                <div class="dining-card" data-category="fine">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&auto=format" alt="Alpine River Trout plate" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">The Canopy Room</span>
+                                <span class="dining-card-price">$$$</span>
+                            </div>
+                            <h3 class="dining-card-name">Alpine River Trout</h3>
+                            <p class="dining-card-info">Caught fresh daily from valley streams, pan-seared with wild chives, organic lemon balm, and river cress.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Seasonal</span>
+                                <span class="dining-tag">Organic</span>
+                                <span class="dining-tag">Reserve Required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 3: Forest Lounge -->
+                <div class="dining-card" data-category="lounge">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format" alt="Forest Hearth Fire Lounge" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">Hearth & Canopy</span>
+                                <span class="dining-card-price">$$</span>
+                            </div>
+                            <h3 class="dining-card-name">Woodland Moss Board</h3>
+                            <p class="dining-card-info">A curated board of artisanal cheeses aged in stone cellars, local wild honeycomb, pine nuts, and dried figs.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Organic</span>
+                                <span class="dining-tag">Seasonal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 4: Private Chef -->
+                <div class="dining-card" data-category="chef">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80&auto=format" alt="Bespoke luxury chef preparation" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">Your Residence</span>
+                                <span class="dining-card-price">$$$$</span>
+                            </div>
+                            <h3 class="dining-card-name">In-Villa Degustation</h3>
+                            <p class="dining-card-info">A custom 7-course menu crafted on-site in your villa's kitchen, utilizing rare harvested mushrooms and aged wines.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Chef Signature</span>
+                                <span class="dining-tag">Reserve Required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 5: Cocktails -->
+                <div class="dining-card" data-category="cocktails">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80&auto=format" alt="Luxury cocktails with smoke" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">The Amber Bar</span>
+                                <span class="dining-card-price">$$</span>
+                            </div>
+                            <h3 class="dining-card-name">Ember Mist Old Fashioned</h3>
+                            <p class="dining-card-info">Crafted with bourbon, maple oak syrup, and aromatic bitters, served under a glass dome infused with smoke.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Chef Signature</span>
+                                <span class="dining-tag">Seasonal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dining 6: Cocktails -->
+                <div class="dining-card" data-category="cocktails">
+                    <div class="dining-card-shine"></div>
+                    <div class="dining-card-inner">
+                        <div class="dining-card-image">
+                            <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=600&q=80&auto=format" alt="Wild botanical cocktail" loading="lazy">
+                            <div class="dining-card-img-overlay"></div>
+                        </div>
+                        <div class="dining-card-body">
+                            <div class="dining-card-top">
+                                <span class="dining-card-origin">The Amber Bar</span>
+                                <span class="dining-card-price">$$</span>
+                            </div>
+                            <h3 class="dining-card-name">Bioluminescent Tonic</h3>
+                            <p class="dining-card-info">A refreshing blend of forest gin, elderflower liqueur, pine tonic, and a glowing garnish of local botanical herbs.</p>
+                            <div class="dining-card-tags">
+                                <span class="dining-tag">Organic</span>
+                                <span class="dining-tag">Seasonal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 07: WELLNESS SANCTUARY -->
+        <section class="wellness-section" id="wellness">
+            <div class="wellness-inner">
+                <!-- Large Spa Image Frame -->
+                <div class="wellness-visual scroll-parallax">
+                    <img src="images/spa_sanctuary.png" alt="Serene luxury spa area with pool" class="wellness-main-img" loading="lazy">
+                    <div class="wellness-image-overlay"></div>
+                    <div class="wellness-glow-pulse"></div>
+                </div>
+                
+                <!-- Floating Info Cards overlay -->
+                <div class="wellness-content">
+                    <span class="section-tag wellness-tag">The Sanctuary Within</span>
+                    <h2 class="section-title wellness-title">Wellness Sanctuary</h2>
+                    <p class="wellness-desc">Descend into stone chambers where ancient minerals and thermal waters restore pure balance. A sanctuary designed for absolute silence and rejuvenation.</p>
+                    
+                    <div class="wellness-cards">
+                        <div class="well-card">
+                            <div class="well-card-icon">🍃</div>
+                            <h4 class="well-card-title">Forest Spa</h4>
+                            <p class="well-card-text">Domes immersed in deep woodland, practicing organic cedar oil treatments.</p>
+                        </div>
+                        <div class="well-card">
+                            <div class="well-card-icon">💧</div>
+                            <h4 class="well-card-title">Hydrotherapy</h4>
+                            <p class="well-card-text">Thermal rock pools fed by pure natural mineral hot springs.</p>
+                        </div>
+                        <div class="well-card">
+                            <div class="well-card-icon">🧘</div>
+                            <h4 class="well-card-title">Meditation Pavilion</h4>
+                            <p class="well-card-text">An open glass platform hovering above quiet, mist-filled forest hollows.</p>
+                        </div>
+                        <div class="well-card">
+                            <div class="well-card-icon">🌲</div>
+                            <h4 class="well-card-title">Private Wellness Retreat</h4>
+                            <p class="well-card-text">Multi-day guided retreat programs customized to your specific needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 08: RESERVATION EXPERIENCE -->
+        <section class="reservation-section" id="reservation">
+            <div class="reservation-bg-image">
+                <img src="images/luxury_lobby.jpg" alt="Luxury forest hotel lobby backdrop" class="res-bg-img" loading="lazy">
+                <div class="reservation-bg-overlay"></div>
+            </div>
+            
+            <div class="reservation-inner">
+                <div class="reservation-content">
+                    <span class="section-tag reservation-tag">Begin Your Retreat</span>
+                    <h2 class="section-title reservation-title">Reserve Your Sanctuary</h2>
+                    <p class="reservation-desc">Step across the boundary of the ordinary world. Every booking is a handcrafted hospitality journey, curated from details of nature and absolute serenity.</p>
+                </div>
+                
+                <!-- Centered Glass Reservation Panel -->
+                <div class="reservation-form-wrapper">
+                    <div class="reservation-card" id="reservationCard">
+                        <div class="reservation-card-shine"></div>
+                        <form class="reservation-form" id="reservationForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="resName">Full Name</label>
+                                    <input type="text" id="resName" class="form-input" placeholder="Your name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="resEmail">Email Address</label>
+                                    <input type="email" id="resEmail" class="form-input" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="resArrive">Arrival Date</label>
+                                    <input type="date" id="resArrive" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="resDepart">Departure Date</label>
+                                    <input type="date" id="resDepart" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="resGuests">Guests</label>
+                                    <select id="resGuests" class="form-input" required>
+                                        <option value="" disabled selected>Party size</option>
+                                        <option value="1">1 Guest</option>
+                                        <option value="2">2 Guests</option>
+                                        <option value="3-4">3–4 Guests</option>
+                                        <option value="5+">5+ Guests</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="resType">Accommodation</label>
+                                    <select id="resType" class="form-input" required>
+                                        <option value="" disabled selected>Select residence</option>
+                                        <option value="canopy">Forest Canopy Villa</option>
+                                        <option value="emerald">Emerald Pool Residence</option>
+                                        <option value="moonlight">Moonlight Pavilion</option>
+                                        <option value="sanctuary">The Sanctuary Suite</option>
+                                        <option value="riverstone">Riverstone Retreat</option>
+                                        <option value="skydeck">Sky Deck Residence</option>
+                                        <option value="hidden">Hidden Grove Villa</option>
+                                        <option value="royal">Royal Forest Manor</option>
+                                        <option value="grand">Auralis Grand Estate</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group form-group-full">
+                                    <label class="form-label" for="resPackage">Experience Package</label>
+                                    <select id="resPackage" class="form-input" required>
+                                        <option value="" disabled selected>Choose experience</option>
+                                        <option value="spa">Forest Wellness & Spa Ritual</option>
+                                        <option value="dining">Private Culinary degustation</option>
+                                        <option value="trails">Botanical Discovery Journey</option>
+                                        <option value="full">Full Sanctuary Package (All-Inclusive)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-full" style="margin-bottom: 28px;">
+                                <label class="form-label" for="resNotes">Special Requests</label>
+                                <textarea id="resNotes" class="form-input form-textarea" placeholder="Dietary requests, helicopter transfers, or wellness preferences..." rows="3"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-reserve" id="submitReservation">
+                                <span class="btn-bg"></span>
+                                <span class="btn-text">Reserve Your Sanctuary</span>
+                                <span class="btn-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 09: FOOTER -->
+        <footer class="footer" id="footer">
+            <div class="footer-inner">
+                <div class="footer-top">
+                    <div class="footer-brand">
+                        <span class="footer-logo">AURALIS GRAND FOREST RESERVE</span>
+                        <p class="footer-tagline">Where Luxury Meets The Wild.</p>
+                    </div>
+                    <div class="footer-links-group">
+                        <div class="footer-col">
+                            <span class="footer-col-title">Stay</span>
+                            <a href="#residences" class="footer-link">Residences</a>
+                            <a href="#residences" class="footer-link">Villas & Estates</a>
+                            <a href="#reservation" class="footer-link">Private Bookings</a>
+                        </div>
+                        <div class="footer-col">
+                            <span class="footer-col-title">Experiences</span>
+                            <a href="#experiences" class="footer-link">Wellness Spa</a>
+                            <a href="#experiences" class="footer-link">Bespoke Dining</a>
+                            <a href="#experiences" class="footer-link">Nature Trails</a>
+                        </div>
+                        <div class="footer-col">
+                            <span class="footer-col-title">Discover</span>
+                            <a href="#story" class="footer-link">Our Story</a>
+                            <a href="#story" class="footer-link">Architecture</a>
+                            <a href="#story" class="footer-link">Sustainability</a>
+                        </div>
+                        <div class="footer-col">
+                            <span class="footer-col-title">Connect</span>
+                            <a href="#" class="footer-link">Instagram</a>
+                            <a href="#" class="footer-link">Newsletter</a>
+                            <a href="#" class="footer-link">Sanctuary Club</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <span class="footer-copy">© 2026 Auralis Grand Forest Reserve. All rights reserved.</span>
+                    <span class="footer-motto">Crafted with reverence for the forest.</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Master Scripts -->
+    <script src="script.js?v=2"></script>
+</body>
+
+</html>
