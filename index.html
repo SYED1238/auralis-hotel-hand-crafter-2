@@ -1037,6 +1037,76 @@
             </div>
         </footer>
 
+    <!-- Cinematic Portal Experience Overlay -->
+    <div class="portal-overlay" id="portalOverlay">
+        <div class="portal-bg-canvas-container">
+            <canvas id="portalParticleCanvas"></canvas>
+        </div>
+        <div class="portal-volumetric-glow" id="portalVolumetricGlow"></div>
+        
+        <!-- The Active Portal Environment -->
+        <div class="portal-env" id="portalEnv">
+            <!-- Layers of Parallax (populated dynamically based on theme) -->
+            <div class="portal-layer layer-back" id="portalLayerBack"></div>
+            <div class="portal-layer layer-mid" id="portalLayerMid"></div>
+            <div class="portal-layer layer-front" id="portalLayerFront"></div>
+            <div class="portal-layer layer-atmospheric" id="portalLayerAtmospheric"></div>
+            
+            <!-- Cinematic HUD & Storytelling Overlay -->
+            <div class="portal-hud" id="portalHud">
+                <div class="hud-header">
+                    <div class="hud-meta-row">
+                        <span class="hud-coords" id="portalCoords">COORDS: 47.3820° N, 12.1804° E</span>
+                        <span class="hud-altitude" id="portalAltitude">ALTITUDE: 1,240M</span>
+                    </div>
+                    <div class="hud-title-row">
+                        <h2 class="hud-title" id="portalTitle">Forest Canopy Villa</h2>
+                        <span class="hud-badge" id="portalBadge">PRIVATE SANCTUARY</span>
+                    </div>
+                    <span class="hud-subtitle" id="portalSubtitle">A Secluded Glass Pavilion Above The Pines</span>
+                </div>
+                
+                <div class="hud-divider">
+                    <div class="hud-divider-line"></div>
+                    <div class="hud-divider-dot"></div>
+                    <div class="hud-divider-line"></div>
+                </div>
+                
+                <div class="hud-body">
+                    <p class="hud-narrative" id="portalNarrative">
+                        <!-- Populated dynamically with character delay -->
+                    </p>
+                    
+                    <div class="hud-specs" id="portalSpecs">
+                        <!-- Specifications list -->
+                    </div>
+                </div>
+                
+                <div class="hud-footer">
+                    <div class="hud-actions">
+                        <a href="#reservation" class="btn btn-hud-reserve" id="hudActionReserve">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Reserve This Sanctuary</span>
+                        </a>
+                        <button class="btn btn-hud-sound" id="hudActionSound">
+                            <span class="btn-icon">🔊</span>
+                            <span class="btn-text">Ambient Soundscape</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Close Portal Button -->
+                <button class="portal-close-btn" id="portalCloseBtn" aria-label="Exit portal">
+                    <svg class="close-icon-svg" viewBox="0 0 40 40" fill="none">
+                        <circle class="close-circle" cx="20" cy="20" r="18" stroke="currentColor" stroke-width="0.8" />
+                        <path d="M15 15L25 25M25 15L15 25" stroke="currentColor" stroke-width="1.2" />
+                    </svg>
+                    <span class="close-text">Return to Reserve Collection</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     </main>
 
     <!-- Master Scripts -->
