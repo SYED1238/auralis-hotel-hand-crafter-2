@@ -1,0 +1,11 @@
+{
+  "name": "auralis-hotel-hand-crafter-2",
+  "version": "1.0.0",
+  "description": "Auralis Hotel Hand Crafter Web App",
+  "scripts": {
+    "dev": "http-server -p 3000 -c-1 -o"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

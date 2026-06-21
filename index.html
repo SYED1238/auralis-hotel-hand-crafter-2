@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -1036,6 +1036,7 @@
                 </div>
             </div>
         </footer>
+    </main>
 
     <!-- Cinematic Portal Experience Overlay -->
     <div class="portal-overlay" id="portalOverlay">
@@ -1046,7 +1047,8 @@
         
         <!-- The Active Portal Environment -->
         <div class="portal-env" id="portalEnv">
-            <!-- Layers of Parallax (populated dynamically based on theme) -->
+            <!-- Parallax layers (populated dynamically based on theme) -->
+            <video id="portalBgVideo" autoplay loop muted playsinline class="portal-video-bg"></video>
             <div class="portal-layer layer-back" id="portalLayerBack"></div>
             <div class="portal-layer layer-mid" id="portalLayerMid"></div>
             <div class="portal-layer layer-front" id="portalLayerFront"></div>
@@ -1107,10 +1109,8 @@
         </div>
     </div>
 
-    </main>
-
     <!-- Master Scripts -->
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=5"></script>
 </body>
 
 </html>

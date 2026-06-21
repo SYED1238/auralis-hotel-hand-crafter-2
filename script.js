@@ -3,6 +3,7 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("AURALIS SCRIPT VERSION 4 ACTIVE");
 
     // ==========================================
     // 1. TIME OF DAY SANCTUARY SYSTEM
@@ -678,8 +679,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'View', value: 'Ancient Valley & Canopies' }
             ],
             sound: 'forest',
-            back: 'images/hero_forest_villa.png',
-            mid: 'images/suite_forest.png',
+            back: 'images/suite_forest.png',
+            mid: 'images/hero_forest_villa.png',
             front: 'images/spa_sanctuary.png',
             atmospheric: 'images/hero_sanctuary.png'
         },
@@ -779,6 +780,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let soundActive = false;
     let soundType = '';
     let originalCardBounds = null;
+    let originalImgBounds = null;
+    let originalBorderRadius = '28px';
     let activeCardId = null;
 
     // Mouse coordinates for parallax
@@ -831,14 +834,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start local canvas dissolve particles at surrounding card centers
         startDissolveParticles(card);
 
-        // 2. Clone Clicked Card & Animate to Fullscreen (Spring Physics)
+        // 2. Clone Clicked Card Image & Animate to Fullscreen (Spring Physics)
+        const imgEl = card.querySelector('.col-card-img') || card.querySelector('.dining-card-image img') || card.querySelector('img');
+        originalImgBounds = imgEl ? imgEl.getBoundingClientRect() : card.getBoundingClientRect();
+
         const clone = document.createElement('div');
         clone.className = 'portal-card-clone';
         clone.id = 'portalCardClone';
-        clone.style.top = `${originalCardBounds.top}px`;
-        clone.style.left = `${originalCardBounds.left}px`;
-        clone.style.width = `${originalCardBounds.width}px`;
-        clone.style.height = `${originalCardBounds.height}px`;
+        clone.style.top = `${originalImgBounds.top}px`;
+        clone.style.left = `${originalImgBounds.left}px`;
+        clone.style.width = `${originalImgBounds.width}px`;
+        clone.style.height = `${originalImgBounds.height}px`;
+
+        const visualParent = imgEl ? (imgEl.closest('.col-card-visual') || imgEl.closest('.dining-card-image')) : null;
+        originalBorderRadius = visualParent ? window.getComputedStyle(visualParent).borderRadius : '28px';
+        clone.style.borderRadius = originalBorderRadius;
 
         const cloneImg = document.createElement('img');
         cloneImg.src = img;
@@ -864,9 +874,26 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Populate Parallax Layers
             layerBack.style.backgroundImage = `url(${data.back})`;
-            layerMid.style.backgroundImage = `url(${data.mid})`;
-            layerFront.style.backgroundImage = `url(${data.front})`;
-            layerAtmospheric.style.backgroundImage = `url(${data.atmospheric})`;
+            layerMid.style.backgroundImage = `url(${data.back})`;
+            layerFront.style.backgroundImage = `url(${data.back})`;
+            layerAtmospheric.style.backgroundImage = `url(${data.back})`;
+
+            // Video background logic
+            const bgVideo = document.getElementById('portalBgVideo');
+            if (bgVideo) {
+                if (data.video) {
+                    bgVideo.src = data.video;
+                    bgVideo.load();
+                    bgVideo.play().catch(err => console.log("Video auto-play failed: ", err));
+                    bgVideo.classList.add('active');
+                    layerBack.style.opacity = '0';
+                } else {
+                    bgVideo.pause();
+                    bgVideo.src = '';
+                    bgVideo.classList.remove('active');
+                    layerBack.style.opacity = '';
+                }
+            }
 
             // Populate HUD elements
             portalTitle.textContent = data.title;
@@ -909,9 +936,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clean up card clone
             setTimeout(() => {
                 clone.remove();
-            }, 600);
+            }, 500);
 
-        }, 1150); // Overlay hits before final expansion ends to cover seams
+        }, 750); // Overlay hits before final expansion ends to cover seams
     }
 
     function exitPortalTransition() {
@@ -926,6 +953,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear typewriter loops
         clearTimeout(typewriterTimeout);
         portalNarrative.textContent = '';
+
+        // Video background clean up
+        const bgVideo = document.getElementById('portalBgVideo');
+        if (bgVideo) {
+            bgVideo.pause();
+            bgVideo.src = '';
+            bgVideo.classList.remove('active');
+        }
+        layerBack.style.opacity = '';
 
         // Capture static background image of active card
         const data = getResidenceData(activeCardId, '', '', '', '');
@@ -953,10 +989,11 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(() => {
             setTimeout(() => {
                 clone.classList.remove('expanding');
-                clone.style.top = `${originalCardBounds.top}px`;
-                clone.style.left = `${originalCardBounds.left}px`;
-                clone.style.width = `${originalCardBounds.width}px`;
-                clone.style.height = `${originalCardBounds.height}px`;
+                clone.style.top = `${originalImgBounds.top}px`;
+                clone.style.left = `${originalImgBounds.left}px`;
+                clone.style.width = `${originalImgBounds.width}px`;
+                clone.style.height = `${originalImgBounds.height}px`;
+                clone.style.borderRadius = originalBorderRadius;
             }, 50);
         });
 
@@ -971,7 +1008,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clone.remove();
             portalActive = false;
             activeCardId = null;
-        }, 1600);
+        }, 1250);
     }
 
     function startTypewriter(text) {
@@ -1003,6 +1040,12 @@ document.addEventListener('DOMContentLoaded', () => {
             parallaxOffset.y += (parallaxOffset.targetY - parallaxOffset.y) * 0.07;
 
             layerBack.style.transform = `scale(1.05) translate(${parallaxOffset.x * -12}px, ${parallaxOffset.y * -12}px)`;
+            
+            const bgVideo = document.getElementById('portalBgVideo');
+            if (bgVideo && bgVideo.classList.contains('active')) {
+                bgVideo.style.transform = `scale(1.05) translate(${parallaxOffset.x * -12}px, ${parallaxOffset.y * -12}px)`;
+            }
+
             layerMid.style.transform = `scale(1.08) translate(${parallaxOffset.x * -25}px, ${parallaxOffset.y * -25}px)`;
             layerFront.style.transform = `scale(1.12) translate(${parallaxOffset.x * -42}px, ${parallaxOffset.y * -42}px)`;
             layerAtmospheric.style.transform = `scale(1.15) translate(${parallaxOffset.x * -60}px, ${parallaxOffset.y * -60}px)`;
